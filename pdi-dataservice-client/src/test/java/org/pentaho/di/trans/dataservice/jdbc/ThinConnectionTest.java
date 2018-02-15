@@ -79,6 +79,9 @@ public class ThinConnectionTest extends JDBCTestBase<ThinConnection> {
   private static String host = "localhost";
   private static int port = 8080;
   private static String debugTrans = "debugTrans";
+  private static String windowRows = "1";
+  private static String windowTime = "2";
+  private static String windowRate = "3";
   private Matcher<String> noBangMatcher;
 
   private String url;
@@ -97,6 +100,9 @@ public class ThinConnectionTest extends JDBCTestBase<ThinConnection> {
     properties = new Properties();
     properties.setProperty( "user", "username" );
     properties.setProperty( "password", "password" );
+    properties.setProperty( "windowrows", windowRows );
+    properties.setProperty( "windowtime", windowTime );
+    properties.setProperty( "windowrate", windowRate );
 
     connection = new ThinConnection( url, URI.create( "http://localhost:8080/pentaho/kettle" ) );
     connection.setClientService( clientService );
@@ -128,6 +134,9 @@ public class ThinConnectionTest extends JDBCTestBase<ThinConnection> {
     assertEquals( port, connection.getPort() );
 
     assertEquals( "username", connection.getUsername() );
+    assertEquals( windowRows, connection.getWindowRows() );
+    assertEquals( windowTime, connection.getWindowTime() );
+    assertEquals( windowRate, connection.getWindowRate() );
 
     assertThat( connection.getDebugTransFilename(), is( debugTrans ) );
     assertEquals( false, connection.isLocal() );
@@ -165,6 +174,9 @@ public class ThinConnectionTest extends JDBCTestBase<ThinConnection> {
       put( "debugtrans", debugTrans ).
       put( "secure", "true" ).
       put( "local", "false" ).
+      put( "windowrows", windowRows ).
+      put( "windowtime", windowTime ).
+      put( "windowrate", windowRate ).
       put( "PARAMETER_HELLO_WORLD", URLEncoder.encode( "test value", Charsets.UTF_8.name() ) ).
       build();
     url = "jdbc:pdi://localhost:8080/kettle?" + Joiner.on( "&" ).withKeyValueSeparator( "=" ).join( args );
@@ -178,6 +190,9 @@ public class ThinConnectionTest extends JDBCTestBase<ThinConnection> {
     assertEquals( host, thinConnection.getHostname() );
     assertEquals( port, thinConnection.getPort() );
     assertEquals( "username", thinConnection.getUsername() );
+    assertEquals( windowRows, thinConnection.getWindowRows() );
+    assertEquals( windowTime, thinConnection.getWindowTime() );
+    assertEquals( windowRate, thinConnection.getWindowRate() );
     assertEquals( proxyHostName, thinConnection.getProxyHostname() );
     assertEquals( proxyPort, thinConnection.getProxyPort() );
     assertEquals( nonProxyHosts, thinConnection.getNonProxyHosts() );
