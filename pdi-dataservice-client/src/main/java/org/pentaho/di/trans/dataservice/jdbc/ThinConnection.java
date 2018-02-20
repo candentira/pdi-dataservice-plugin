@@ -41,6 +41,7 @@ import org.pentaho.di.i18n.BaseMessages;
 import org.pentaho.di.trans.dataservice.client.ConnectionAbortingSupport;
 import org.pentaho.di.trans.dataservice.client.api.IDataServiceClientService;
 import org.pentaho.di.trans.dataservice.jdbc.annotation.NotSupported;
+import org.pentaho.di.trans.dataservice.jdbc.api.IThinStatement;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -167,17 +168,17 @@ public class ThinConnection extends ThinBase implements Connection {
   }
 
   @Override
-  public Statement createStatement() throws SQLException {
+  public IThinStatement createStatement() throws SQLException {
     return new ThinStatement( this );
   }
 
   @Override
-  public Statement createStatement( int resultSetType, int resultSetConcurrency ) throws SQLException {
+  public IThinStatement createStatement( int resultSetType, int resultSetConcurrency ) throws SQLException {
     return new ThinStatement( this );
   }
 
   @Override
-  public Statement createStatement( int resultSetType, int resultSetConcurrency, int resultSetHoldability ) {
+  public IThinStatement createStatement( int resultSetType, int resultSetConcurrency, int resultSetHoldability ) {
     return new ThinStatement( this );
   }
 
